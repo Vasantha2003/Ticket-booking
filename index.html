@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ticket Booker</title>
+  <style>
+    /* CSS styles for the ticket booking form */
+    body {
+      font-family: 'Roboto', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    /* Background images for different ticket types */
+    body.train {
+      background-image: url('train_background.jpg');
+    }
+
+    body.plane {
+      background-image: url('plane_background.jpg');
+    }
+
+    body.bus {
+      background-image: url('bus_background.jpg');
+    }
+
+    body.car {
+      background-image: url('car_background.jpg');
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-top: 50px;
+      font-family: 'Pacifico', cursive;
+      font-size: 48px;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #555;
+    }
+
+    input[type="text"],
+    select,
+    input[type="date"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 5px;
+      transition:background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .ticket-image {
+      display: inline-block;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: border-color 0.3s;
+    }
+
+    .ticket-image img {
+      width: 100px;
+      height: auto;
+      border-radius: 5px;
+    }
+
+    .ticket-image.selected {
+      border-color: #4CAF50;
+    }
+
+    .success-message {
+      margin-top: 20px;
+      text-align: center;
+      color: #4CAF50;
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .logo img {
+      width: 80px;
+      height: auto;
+    }
+  </style>
+</head>
+<body class="train"> <!-- Replace 'train' with the desired background class -->
+  <div class="logo">
+    <img src="logo.png" alt="Ticket Booker Logo">
+  </div>
+  <h1>Ticket Booker</h1>
+  <div class="container">
+    <div class="form-group">
+      <label for="name">Name:</label>
+      <input type="text" id="name" placeholder="Enter your name">
+    </div>
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="text" id="email" placeholder="Enter your email">
+    </div>
+    <div class="form-group">
+      <label for="departureDate">Departure Date:</label>
+      <input type="date" id="departureDate">
+    </div>
+    <div class="form-group">
+      <label for="arrivalDate">Arrival Date:</label>
+      <input type="date" id="arrivalDate">
+    </div>
+    <div class="form-group">
+      <label for="departurePlace">Departure Place:</label>
+      <input type="text" id="departurePlace" placeholder="Enter departure place">
+    </div>
+    <div class="form-group">
+      <label for="arrivalPlace">Arrival Place:</label>
+      <input type="text" id="arrivalPlace" placeholder="Enter arrival place">
+    </div>
+    <div class="form-group">
+      <label>Ticket Type:</label><br>
+      <label for="trainTicket" class="ticket-image">
+        <input type="radio" id="trainTicket" name="ticketType" value="Train">
+        <a href="booking-details.html" target="https://www.irctc.com/" onclick="storeTicketType('Train')">
+          <img src="train_ticket.jpg" alt="Train Ticket">
+        </a>
+      </label>
+      <label for="planeTicket" class="ticket-image">
+        <input type="radio" id="planeTicket" name="ticketType" value="Plane">
+        <a href="booking-details.html" target="_blank" onclick="storeTicketType('Plane')">
+          <img src="plane_ticket.jpg" alt="Plane Ticket">
+        </a>
+      </label>
+      <label for="busTicket" class="ticket-image">
+        <input type="radio" id="busTicket" name="ticketType" value="Bus">
+        <a href="booking-details.html" target="_blank" onclick="storeTicketType('Bus')">
+          <img src="bus_ticket.jpg" alt="Bus Ticket">
+        </a>
+      </label>
+      <label for="carTicket" class="ticket-image">
+        <input type="radio" id="carTicket" name="ticketType" value="Car">
+        <a href="booking-details.html" target="_blank" onclick="storeTicketType('Car')">
+          <img src="car_ticket.jpg" alt="Car Ticket">
+        </a>
+      </label>
+    </div>
+    <div class="form-group">
+      <label for="tickets">Number of Tickets:</label>
+      <select id="tickets">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+      </select>
+    </div>
+    <button onclick="bookTickets()">Book Tickets</button>
+    <div id="successMessage" class="success-message"></div>
+  </div>
+
+  <script>
+    // JavaScript code for booking tickets
+    function bookTickets() {
+      
+      var name = document.getElementById('name').value;
+      var email = document.getElementById('email').value;
+      var departureDate = document.getElementById('departureDate').value;
+      var arrivalDate = document.getElementById('arrivalDate').value;
+      var departurePlace = document.getElementById('departurePlace').value;
+      var arrivalPlace = document.getElementById('arrivalPlace').value;
+      var ticketType = document.querySelector('input[name="ticketType"]:checked');
+      var tickets = document.getElementById('tickets').value;
+
+      if (!name || !email || !departureDate || !arrivalDate || !departurePlace || !arrivalPlace || !ticketType) {
+        alert('Please fill in all the required fields.');
+        return;
+      }
+
+      var ticketTypeName = ticketType.value;
+      var ticketTypeImage = ticketType.nextElementSibling.querySelector('img').src;
+
+      // Store ticket type in localStorage for the next page
+      localStorage.setItem('ticketType', ticketTypeName);
+      localStorage.setItem('name', name);
+      localStorage.setItem('email', email);
+      localStorage.setItem('departureDate', departureDate);
+      localStorage.setItem('arrivalDate', arrivalDate);
+      localStorage.setItem('departurePlace', departurePlace);
+      localStorage.setItem('arrivalPlace', arrivalPlace);
+      localStorage.setItem('ticketType', ticketTypeName);
+
+      // Redirect to the booking details page
+      window.open('booking-details.html', '_blank');
+    }
+  </script>
+</body>
+</html>

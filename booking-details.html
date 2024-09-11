@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Booking Details</title>
+  <style>
+    /* CSS styles for the booking details page */
+    body {
+      font-family: 'Roboto', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    /* Background images for different ticket types */
+    body.train {
+      background-image: url('train_background.jpg');
+    }
+
+    body.plane {
+      background-image: url('plane_background.jpg');
+    }
+
+    body.bus {
+      background-image: url('bus_background.jpg');
+    }
+
+    body.car {
+      background-image: url('car_background.jpg');
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-top: 50px;
+      font-family: 'Pacifico', cursive;
+      font-size: 48px;
+    }
+
+    .booking-details {
+      margin-bottom: 20px;
+    }
+
+    .booking-details label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: #555;
+    }
+
+    .booking-details span {
+      display: block;
+      margin-bottom: 15px;
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .logo img {
+      width: 80px;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="logo">
+    <img src="logo.png" alt="Ticket Booker Logo">
+  </div>
+  <h1>Booking Details</h1>
+  <div class="container">
+    <div class="booking-details">
+      <label>Ticket Type:</label>
+      <span id="ticketType"></span>
+    </div>
+    <div class="booking-details">
+      <label>Name:</label>
+      <span id="name"></span>
+    </div>
+    <div class="booking-details">
+      <label>Email:</label>
+      <span id="email"></span>
+    </div>
+    <div class="booking-details">
+      <label>Departure Date:</label>
+      <span id="departureDate"></span>
+    </div>
+    <div class="booking-details">
+      <label>Arrival Date:</label>
+      <span id="arrivalDate"></span>
+    </div>
+    <div class="booking-details">
+      <label>Departure Place:</label>
+      <span id="departurePlace"></span>
+    </div>
+    <div class="booking-details">
+      <label>Arrival Place:</label>
+      <span id="arrivalPlace"></span>
+    </div>
+  </div>
+
+  <script>
+    // JavaScript code for retrieving and displaying booking details
+    document.addEventListener('DOMContentLoaded', function() {
+      var ticketType = localStorage.getItem('ticketType');
+      var name = localStorage.getItem('name');
+      var email = localStorage.getItem('email');
+      var departureDate = localStorage.getItem('departureDate');
+      var arrivalDate = localStorage.getItem('arrivalDate');
+      var departurePlace = localStorage.getItem('departurePlace');
+      var arrivalPlace = localStorage.getItem('arrivalPlace');
+
+      // Set the background based on the ticket type
+      document.body.classList.add(ticketType.toLowerCase());
+      
+
+      // Display the booking details
+      document.getElementById('ticketType').textContent = ticketType;
+      document.getElementById('name').textContent = name;
+      document.getElementById('email').textContent = email;
+      document.getElementById('departureDate').textContent = departureDate;
+      document.getElementById('arrivalDate').textContent = arrivalDate;
+      document.getElementById('departurePlace').textContent = departurePlace;
+      document.getElementById('arrivalPlace').textContent = arrivalPlace;
+
+      // Clear the stored data from local storage
+      localStorage.removeItem('ticketType');
+      localStorage.removeItem('name');
+      localStorage.removeItem('email');
+      localStorage.removeItem('departureDate');
+      localStorage.removeItem('arrivalDate');
+      localStorage.removeItem('departurePlace');
+      localStorage.removeItem('arrivalPlace');
+    });
+    
+  </script>
+</body>
+</html>
